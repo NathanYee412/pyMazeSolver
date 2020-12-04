@@ -1,4 +1,5 @@
 # CPSC 481 PROJECT 
+![Maze GIF](https://media2.giphy.com/media/0qDmx3Vl8cl9iRYuyf/giphy.gif)
 ## Maze Solver using OpenCV
 ### created by 
 - Nathan Yee
