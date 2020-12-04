@@ -21,6 +21,9 @@ BFS.pack(fill="x")
 BFSdefault = tk.Button(window, text="BFS Hard Maze", command=lambda : solveMaze("maze_hard.png"))
 BFSdefault.pack(fill="x")
 
+BFSez = tk.Button(window, text="BFS Easy Maze", command=lambda : solveMaze("fish.jpg"))
+BFSez.pack(fill="x")
+
 
 window.mainloop()
 
