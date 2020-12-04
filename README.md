@@ -15,3 +15,6 @@
 - pip3 install opencv-python
 - pip3 install numpy
 - pip3 install matplotlib
+
+### how to run
+- $ python3 ui.py
