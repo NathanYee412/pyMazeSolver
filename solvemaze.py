@@ -4,9 +4,6 @@ import threading
 import colorsys
 
 
-
-
-
 class Point(object):
 
     def __init__(self, x=0, y=0):
@@ -18,6 +15,7 @@ class Point(object):
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+
 
 
 
@@ -94,7 +92,10 @@ def disp():
         cv2.imshow("Image", img)
         cv2.waitKey(1)
 
-def solveMaze():
+
+def solveMaze(imgName):
+    global rw, p, start, end, dir4, img, h, w, t
+
     rw = 2
     p = 0
     start = Point()
@@ -103,8 +104,7 @@ def solveMaze():
     dir4 = [Point(0, -1), Point(0, 1), Point(1, 0), Point(-1, 0)]
 
 
-
-    img = cv2.imread("maze_hard.png", cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread(imgName, cv2.IMREAD_GRAYSCALE)
     _, img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     h, w = img.shape[:2]
@@ -123,4 +123,8 @@ def solveMaze():
 
     cv2.waitKey(0)
 
-solveMaze()
+# def main():
+#     solveMaze()
+
+# if __name__ == "__main__":
+#     main()
