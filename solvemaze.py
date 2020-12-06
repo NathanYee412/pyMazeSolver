@@ -88,9 +88,11 @@ def disp():
     global img
     cv2.imshow("Image", img)
     cv2.setMouseCallback('Image', mouse_event)
-    while True:
+    key = -1
+    while key == -1:
         cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        key = cv2.waitKey(1)
+    cv2.destroyAllWindows()
 
 
 def solveMaze(imgName):
@@ -121,7 +123,8 @@ def solveMaze(imgName):
 
     BFS(start, end)
 
-    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    t.join()
 
 # def main():
 #     solveMaze()
