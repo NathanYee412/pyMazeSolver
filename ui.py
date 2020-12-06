@@ -15,7 +15,7 @@ window['background'] = 'yellow'
 
 pickMaze = tk.Button(window, text="Choose Maze to solve", command=lambda : chooseFile())
 pickMaze.pack(fill="x")
-BFS = tk.Button(window, text="BFS User Maze", command=lambda : solveMaze(window.filename))
+BFS = tk.Button(window, text="BFS User Maze", command=lambda : solveMazeBFS(window.filename))
 BFS.pack(fill="x")
 
 BFSdefault = tk.Button(window, text="BFS Hard Maze", command=lambda : solveMazeBFS("maze_hard.png"))
@@ -24,7 +24,7 @@ BFSdefault.pack(fill="x")
 BFSdefault = tk.Button(window, text="DFS Hard Maze", command=lambda : solveMazeDFS("maze_hard.png"))
 BFSdefault.pack(fill="x")
 
-BFSez = tk.Button(window, text="BFS Easy Maze", command=lambda : solveMaze("fish.jpg"))
+BFSez = tk.Button(window, text="BFS Easy Maze", command=lambda : solveMazeBFS("fish.jpg"))
 BFSez.pack(fill="x")
 
 
