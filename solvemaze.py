@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import threading
 import colorsys
+from time import sleep
 
 
 class Point(object):
@@ -32,6 +33,7 @@ def BFS(s, e):
     q.append(s)
     v[s.y][s.x] = 1
     while len(q) > 0:
+        #sleep(0.05)
         p = q.pop(0)
         for d in dir4:
             cell = p + d
@@ -64,6 +66,51 @@ def BFS(s, e):
     else:
         print("Path Not Found")
 
+def DFS(s, e):
+
+    global img, h, w
+    const = 10000
+
+    found = False
+    q = []
+    v = [[0 for j in range(w)] for i in range(h)]
+    parent = [[Point() for j in range(w)] for i in range(h)]
+
+    q.append(s)
+    v[s.y][s.x] = 1
+    while len(q) > 0:
+        #sleep(0.05)
+        p = q.pop(len(q) - 1)
+        for d in dir4:
+            cell = p + d
+            if (cell.x >= 0 and cell.x < w and cell.y >= 0 and cell.y < h and v[cell.y][cell.x] == 0 and
+                    (img[cell.y][cell.x][0] != 0 or img[cell.y][cell.x][1] != 0 or img[cell.y][cell.x][2] != 0)):
+                q.append(cell)
+                v[cell.y][cell.x] = v[p.y][p.x] + 1  # Later
+
+                img[cell.y][cell.x] = list(reversed(
+                    [i * 255 for i in colorsys.hsv_to_rgb(v[cell.y][cell.x] / const, 1, 1)])
+                )
+                parent[cell.y][cell.x] = p
+                if cell == e:
+                    found = True
+                    del q[:]
+                    break
+
+    path = []
+    if found:
+        p = e
+        while p != s:
+            path.append(p)
+            p = parent[p.y][p.x]
+        path.append(p)
+        path.reverse()
+
+        for p in path:
+            img[p.y][p.x] = [0, 0, 0]
+        print("Path Found")
+    else:
+        print("Path Not Found")
 
 def mouse_event(event, pX, pY, flags, param):
 
@@ -95,7 +142,7 @@ def disp():
     cv2.destroyAllWindows()
 
 
-def solveMaze(imgName):
+def solveMazeBFS(imgName):
     global rw, p, start, end, dir4, img, h, w, t
 
     rw = 2
@@ -122,6 +169,37 @@ def solveMaze(imgName):
         pass
 
     BFS(start, end)
+
+    cv2.destroyAllWindows()
+    t.join()
+
+def solveMazeDFS(imgName):
+    global rw, p, start, end, dir4, img, h, w, t
+
+    rw = 2
+    p = 0
+    start = Point()
+    end = Point()
+
+    dir4 = [Point(0, -1), Point(0, 1), Point(1, 0), Point(-1, 0)]
+
+
+    img = cv2.imread(imgName, cv2.IMREAD_GRAYSCALE)
+    _, img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
+    img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    h, w = img.shape[:2]
+
+    print("Select start and end points : ")
+
+
+    t = threading.Thread(target=disp, args=())
+    t.daemon = True
+    t.start()
+
+    while p < 2:
+        pass
+
+    DFS(start, end)
 
     cv2.destroyAllWindows()
     t.join()
