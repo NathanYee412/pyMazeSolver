@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import threading
 import colorsys
+import time
 from time import sleep
 
 
@@ -20,10 +21,12 @@ class Point(object):
 
 
 
+
 def BFS(s, e):
 
     global img, h, w
     const = 10000
+    start = time.time()
 
     found = False
     q = []
@@ -53,6 +56,7 @@ def BFS(s, e):
 
     path = []
     if found:
+        end = time.time()
         p = e
         while p != s:
             path.append(p)
@@ -63,6 +67,8 @@ def BFS(s, e):
         for p in path:
             img[p.y][p.x] = [255, 255, 255]
         print("Path Found")
+        print("Time taken: ", str(end-start), " seconds!")
+        setTime((end-start))
     else:
         print("Path Not Found")
 
@@ -70,6 +76,7 @@ def DFS(s, e):
 
     global img, h, w
     const = 10000
+    start = time.time()
 
     found = False
     q = []
@@ -99,6 +106,7 @@ def DFS(s, e):
 
     path = []
     if found:
+        end = time.time()
         p = e
         while p != s:
             path.append(p)
@@ -109,6 +117,8 @@ def DFS(s, e):
         for p in path:
             img[p.y][p.x] = [0, 0, 0]
         print("Path Found")
+        print("Time taken: ", str(end-start), " seconds!")
+        setTime((end-start))
     else:
         print("Path Not Found")
 
