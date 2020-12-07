@@ -4,6 +4,7 @@ import threading
 import colorsys
 import time
 from time import sleep
+from tkinter import messagebox
 
 
 class Point(object):
@@ -68,7 +69,9 @@ def BFS(s, e):
             img[p.y][p.x] = [255, 255, 255]
         print("Path Found")
         print("Time taken: ", str(end-start), " seconds!")
-        setTime((end-start))
+        message = 'Time taken: ', str(end-start), ' seconds! Press OK then any key close the maze'
+        message = " ".join(message)
+        messagebox.showinfo("Total Time", message )
     else:
         print("Path Not Found")
 
@@ -118,7 +121,9 @@ def DFS(s, e):
             img[p.y][p.x] = [0, 0, 0]
         print("Path Found")
         print("Time taken: ", str(end-start), " seconds!")
-        setTime((end-start))
+        message = 'Time taken: ', str(end-start), ' seconds! Press OK then any key close the maze'
+        message = " ".join(message)
+        messagebox.showinfo("Total Time", message )
     else:
         print("Path Not Found")
 
