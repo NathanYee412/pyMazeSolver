@@ -1,5 +1,5 @@
 import cv2
-import numpy as np
+
 import threading
 import colorsys
 import time
@@ -74,6 +74,7 @@ def BFS(s, e):
         messagebox.showinfo("Total Time", message )
     else:
         print("Path Not Found")
+        messagebox.showinfo("Total Time", "Path Not Found!" )
 
 def DFS(s, e):
 
@@ -126,6 +127,7 @@ def DFS(s, e):
         messagebox.showinfo("Total Time", message )
     else:
         print("Path Not Found")
+        messagebox.showinfo("Total Time", "Path Not Found!" )
 
 def mouse_event(event, pX, pY, flags, param):
 

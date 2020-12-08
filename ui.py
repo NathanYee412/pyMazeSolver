@@ -17,7 +17,7 @@ window['background'] = 'yellow'
 welcome = tk.Label(window, pady=10, text="Hello, this is our maze solving program. To get started, you can either upload your own maze, or choose a default maze to solve")
 welcome.pack(fill="x")
 
-pickMaze = tk.Button(window, pady=10, text="Upload Maze to solve", command=lambda : [chooseFile(), messageBoxTime()])
+pickMaze = tk.Button(window, pady=10, text="Upload Maze to solve", command=lambda : chooseFile())
 pickMaze.pack()
 
 BFS = tk.Button(window, text="BFS User Maze", command=lambda : solveMazeBFS(window.filename))
