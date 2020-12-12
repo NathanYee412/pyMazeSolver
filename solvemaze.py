@@ -25,123 +25,123 @@ class Point(object):
 
 def BFS(s, e):
 
-    global img, h, w
+    global pic, h, w
     const = 10000
     start = time.time()
 
     found = False
-    q = []
-    v = [[0 for j in range(w)] for i in range(h)]
+    queue = []
+    visited = [[0 for j in range(w)] for i in range(h)]
     parent = [[Point() for j in range(w)] for i in range(h)]
 
-    q.append(s)
-    v[s.y][s.x] = 1
-    while len(q) > 0:
+    queue.append(s)
+    visited[s.y][s.x] = 1
+    while len(queue) > 0:
         #sleep(0.05)
-        p = q.pop(0)
+        p = queue.pop(0)
         for d in dir4:
             cell = p + d
-            if (cell.x >= 0 and cell.x < w and cell.y >= 0 and cell.y < h and v[cell.y][cell.x] == 0 and
-                    (img[cell.y][cell.x][0] != 0 or img[cell.y][cell.x][1] != 0 or img[cell.y][cell.x][2] != 0)):
-                q.append(cell)
-                v[cell.y][cell.x] = v[p.y][p.x] + 1  # Later
+            if (cell.x >= 0 and cell.x < w and cell.y >= 0 and cell.y < h and visited[cell.y][cell.x] == 0 and
+                    (pic[cell.y][cell.x][0] != 0 or pic[cell.y][cell.x][1] != 0 or pic[cell.y][cell.x][2] != 0)):
+                queue.append(cell)
+                visited[cell.y][cell.x] = visited[p.y][p.x] + 1
 
-                img[cell.y][cell.x] = list(reversed(
-                    [i * 255 for i in colorsys.hsv_to_rgb(v[cell.y][cell.x] / const, 1, 1)])
+                pic[cell.y][cell.x] = list(reversed(
+                    [i * 255 for i in colorsys.hsv_to_rgb(visited[cell.y][cell.x] / const, 1, 1)])
                 )
                 parent[cell.y][cell.x] = p
                 if cell == e:
                     found = True
-                    del q[:]
+                    del queue[:]
                     break
 
-    path = []
+    solutionPath = []
     if found:
         end = time.time()
         p = e
         while p != s:
-            path.append(p)
+            solutionPath.append(p)
             p = parent[p.y][p.x]
-        path.append(p)
-        path.reverse()
+        solutionPath.append(p)
+        solutionPath.reverse()
 
-        for p in path:
-            img[p.y][p.x] = [255, 255, 255]
-        print("Path Found")
+        for p in solutionPath:
+            pic[p.y][p.x] = [255, 255, 255]
+        print("Solution Found")
         print("Time taken: ", str(end-start), " seconds!")
         message = 'Time taken: ', str(end-start), ' seconds! Press OK then any key close the maze'
         message = " ".join(message)
         messagebox.showinfo("Total Time", message )
     else:
-        print("Path Not Found")
-        messagebox.showinfo("Total Time", "Path Not Found!" )
+        print("Solution Not Found")
+        messagebox.showinfo("Total Time", "Solution Not Found!" )
 
 def DFS(s, e):
 
-    global img, h, w
+    global pic, h, w
     const = 10000
     start = time.time()
 
     found = False
-    q = []
-    v = [[0 for j in range(w)] for i in range(h)]
+    queue = []
+    visited = [[0 for j in range(w)] for i in range(h)]
     parent = [[Point() for j in range(w)] for i in range(h)]
 
-    q.append(s)
-    v[s.y][s.x] = 1
-    while len(q) > 0:
+    queue.append(s)
+    visited[s.y][s.x] = 1
+    while len(queue) > 0:
         #sleep(0.05)
-        p = q.pop(len(q) - 1)
+        p = queue.pop(len(queue) - 1)
         for d in dir4:
             cell = p + d
-            if (cell.x >= 0 and cell.x < w and cell.y >= 0 and cell.y < h and v[cell.y][cell.x] == 0 and
-                    (img[cell.y][cell.x][0] != 0 or img[cell.y][cell.x][1] != 0 or img[cell.y][cell.x][2] != 0)):
-                q.append(cell)
-                v[cell.y][cell.x] = v[p.y][p.x] + 1  # Later
+            if (cell.x >= 0 and cell.x < w and cell.y >= 0 and cell.y < h and visited[cell.y][cell.x] == 0 and
+                    (pic[cell.y][cell.x][0] != 0 or pic[cell.y][cell.x][1] != 0 or pic[cell.y][cell.x][2] != 0)):
+                queue.append(cell)
+                visited[cell.y][cell.x] = visited[p.y][p.x] + 1  # Later
 
-                img[cell.y][cell.x] = list(reversed(
-                    [i * 255 for i in colorsys.hsv_to_rgb(v[cell.y][cell.x] / const, 1, 1)])
+                pic[cell.y][cell.x] = list(reversed(
+                    [i * 255 for i in colorsys.hsv_to_rgb(visited[cell.y][cell.x] / const, 1, 1)])
                 )
                 parent[cell.y][cell.x] = p
                 if cell == e:
                     found = True
-                    del q[:]
+                    del queue[:]
                     break
 
-    path = []
+    solutionPath = []
     if found:
         end = time.time()
         p = e
         while p != s:
-            path.append(p)
+            solutionPath.append(p)
             p = parent[p.y][p.x]
-        path.append(p)
-        path.reverse()
+        solutionPath.append(p)
+        solutionPath.reverse()
 
-        for p in path:
-            img[p.y][p.x] = [0, 0, 0]
-        print("Path Found")
+        for p in solutionPath:
+            pic[p.y][p.x] = [0, 0, 0]
+        print("Solution Found")
         print("Time taken: ", str(end-start), " seconds!")
         message = 'Time taken: ', str(end-start), ' seconds! Press OK then any key close the maze'
         message = " ".join(message)
         messagebox.showinfo("Total Time", message )
     else:
-        print("Path Not Found")
-        messagebox.showinfo("Total Time", "Path Not Found!" )
+        print("Solution Not Found")
+        messagebox.showinfo("Total Time", "Solution Not Found!" )
 
 def mouse_event(event, pX, pY, flags, param):
 
-    global img, start, end, p
+    global pic, start, end, p
 
     if event == cv2.EVENT_LBUTTONUP:
         if p == 0:
-            cv2.rectangle(img, (pX - rw, pY - rw),
+            cv2.rectangle(pic, (pX - rw, pY - rw),
                           (pX + rw, pY + rw), (0, 0, 255), -1)
             start = Point(pX, pY)
             print("start = ", start.x, start.y)
             p += 1
         elif p == 1:
-            cv2.rectangle(img, (pX - rw, pY - rw),
+            cv2.rectangle(pic, (pX - rw, pY - rw),
                           (pX + rw, pY + rw), (0, 200, 50), -1)
             end = Point(pX, pY)
             print("end = ", end.x, end.y)
@@ -149,18 +149,18 @@ def mouse_event(event, pX, pY, flags, param):
 
 
 def disp():
-    global img
-    cv2.imshow("Image", img)
+    global pic
+    cv2.imshow("Image", pic)
     cv2.setMouseCallback('Image', mouse_event)
     key = -1
     while key == -1:
-        cv2.imshow("Image", img)
+        cv2.imshow("Image", pic)
         key = cv2.waitKey(1)
     cv2.destroyAllWindows()
 
 
-def solveMazeBFS(imgName):
-    global rw, p, start, end, dir4, img, h, w, t
+def solveMazeBFS(picName):
+    global rw, p, start, end, dir4, pic, h, w, t
 
     rw = 2
     p = 0
@@ -170,10 +170,10 @@ def solveMazeBFS(imgName):
     dir4 = [Point(0, -1), Point(0, 1), Point(1, 0), Point(-1, 0)]
 
 
-    img = cv2.imread(imgName, cv2.IMREAD_GRAYSCALE)
-    _, img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-    h, w = img.shape[:2]
+    pic = cv2.imread(picName, cv2.IMREAD_GRAYSCALE)
+    _, pic = cv2.threshold(pic, 120, 255, cv2.THRESH_BINARY)
+    pic = cv2.cvtColor(pic, cv2.COLOR_GRAY2BGR)
+    h, w = pic.shape[:2]
 
     print("Select start and end points : ")
 
@@ -190,8 +190,8 @@ def solveMazeBFS(imgName):
     cv2.destroyAllWindows()
     t.join()
 
-def solveMazeDFS(imgName):
-    global rw, p, start, end, dir4, img, h, w, t
+def solveMazeDFS(picName):
+    global rw, p, start, end, dir4, pic, h, w, t
 
     rw = 2
     p = 0
@@ -201,10 +201,10 @@ def solveMazeDFS(imgName):
     dir4 = [Point(0, -1), Point(0, 1), Point(1, 0), Point(-1, 0)]
 
 
-    img = cv2.imread(imgName, cv2.IMREAD_GRAYSCALE)
-    _, img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-    h, w = img.shape[:2]
+    pic = cv2.imread(picName, cv2.IMREAD_GRAYSCALE)
+    _, pic = cv2.threshold(pic, 120, 255, cv2.THRESH_BINARY)
+    pic = cv2.cvtColor(pic, cv2.COLOR_GRAY2BGR)
+    h, w = pic.shape[:2]
 
     print("Select start and end points : ")
 
